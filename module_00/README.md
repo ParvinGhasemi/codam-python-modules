@@ -28,13 +28,9 @@ To avoid copying them manually, the `Makefile` can copy the files from the exerc
 
 ```make prepare```: Copies all Python files from the exercise folders to `module_00/` directory.
 
-```make run```: Runs make prepare, then executes:
+```make run```: Runs make prepare, then executes:```python main.py```<br>
 
-```python main.py```<br>
-```make lint```
-
-
-Runs flake8 on the Python files inside the exercise folders.
+```make lint```: Runs flake8 on the Python files inside the exercise folders.
 
 ```make check```: Runs both linting and testing.
 
@@ -44,6 +40,5 @@ Runs flake8 on the Python files inside the exercise folders.
 
 #### Important
 
-Edit the files inside the `ex*/` folders only.
-The copied files in the `module_00/` root are temporary and may be deleted by make clean.
+If you want to play around and/or modify the files, do it inside the `ex*/` folders only. The copied files in the `module_00/` root are temporary and may be deleted by make clean.
 
