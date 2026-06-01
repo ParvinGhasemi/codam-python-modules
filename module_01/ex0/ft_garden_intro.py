@@ -9,7 +9,7 @@ class Plant:
 
 if __name__ == "__main__":
     rose = Plant("rose", 25, 30)
-    lavendar = Plant("hi", 12, 14)
+
     print("=== Welcome to My Garden ===")
     print(f"Plant: {"rose".capitalize()}")
     print(f"Height: {rose.height}cm")
