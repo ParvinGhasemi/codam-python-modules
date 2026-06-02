@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 
 """Organize and display data for multiple garden plants."""
 
