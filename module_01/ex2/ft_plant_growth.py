@@ -40,7 +40,7 @@ if __name__ == "__main__":
     rose: Plant = Plant("Rose", 25.0, 0.8, 30)
     start_height: float = rose.height
     print("=== Garden Plant Growth ===")
-    rose.show
+    rose.show()
     for day in range(1, 8):
         print(f"=== Day {day} ===")
         rose.grow()
