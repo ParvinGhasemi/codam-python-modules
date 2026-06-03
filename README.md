@@ -66,6 +66,13 @@ On Linux:
 xdg-open build/html/index.html
 ```
 
+if the `open` command didn't work, you can also try the below commands - copy & paste all 3 lines together to your terminal in one go:
+```
+cd ~/Documents/codam/python_modules/module_01/docs
+~/.local/bin/sphinx-build -b html source build/html
+open build/html/index.html
+```
+
 #### <ins>Documentation files</ins>
 
 The documentation source files are stored in: `module_01/docs/source/`
