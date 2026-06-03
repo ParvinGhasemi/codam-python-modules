@@ -8,46 +8,55 @@ Important Concepts
 
 - **Class**
 
-    A blueprint for creating objects.
-
 - **Object**
-
-    A real instance created from a class.
 
 - **Instance**
 
-    Another word for an object created from a class.
-
-- **Constructor**
-
-    The ``__init__`` method. It initializes a new object.
+- **Constructor && ** ``__init__()```
 
 - **self**
 
-    Refers to the current object.
-
 - **Attribute**
-
-    Data stored inside an object, such as ``self.name``.
 
 - **Method**
 
-    A function that belongs to a class.
+- **Script entry point with** ``if __name__ == "__main__"``
+
+- Shebang
 
 ----
+
+
 
 Exercise 0 - Garden Intro
 -------------------------
 
+Introduces basic Python program structure, variables, printing,
+
+``if __name__ == "__main__"``, and the shebang line.
+
 .. automodule:: ex0.ft_garden_intro
    :members:
    :undoc-members:
-
-----
+   :show-inheritance:
 
 Exercise 1 - Garden Data
 ------------------------
 
+Introduces the ``Plant`` class and creating multiple objects from the same class.
+
 .. automodule:: ex1.ft_garden_data
    :members:
    :undoc-members:
+   :show-inheritance:
+
+Exercise 2 - Plant Growth
+-------------------------
+
+Adds behavior to the ``Plant`` class using methods such as ``grow()`` and ``age()``.
+
+.. automodule:: ex2.ft_plant_growth
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
