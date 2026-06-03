@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Organize and display data for multiple garden plants."""
+"""Create multiple plant objects using a constructor."""
 
 
 class Plant:

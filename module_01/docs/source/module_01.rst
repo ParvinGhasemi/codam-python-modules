@@ -12,7 +12,7 @@ Important Concepts
 
 - **Instance**
 
-- **Constructor && ** ``__init__()```
+- **Constructor** and ``__init__()``
 
 - **self**
 
@@ -60,3 +60,38 @@ Adds behavior to the ``Plant`` class using methods such as ``grow()`` and ``age(
    :undoc-members:
    :show-inheritance:
 
+Exercise 3 - Plant Factory
+--------------------------
+
+Improves plant creation by using a constructor to instantiate plants with their starting data immediately.
+
+Instead of creating an empty object and assigning attributes later, each ``Plant`` object is created with its name, height, growth rate, and age.
+
+**Concepts practiced:**
+
+- Constructor-based object creation
+- Instantiation
+- Instance attributes
+- Reusing methods from previous exercises
+- Creating multiple objects from the same class
+- Storing objects in a list
+- Iterating over objects and calling their methods
+
+Example:
+~~~~~~~~
+
+.. code-block:: python
+
+   plants = [
+       Plant("Rose", 25.0, 0.8, 30),
+       Plant("Oak", 200.0, 0.2, 365),
+       Plant("Cactus", 5.1, 0.1, 90),
+   ]
+
+   for plant in plants:
+       plant.show()
+
+.. automodule:: ex3.ft_plant_factory
+   :members:
+   :undoc-members:
+   :show-inheritance:
