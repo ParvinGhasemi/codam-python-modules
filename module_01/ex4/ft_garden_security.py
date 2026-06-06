@@ -56,10 +56,8 @@ class Plant:
                 f"{self._name.capitalize()}: "
                 f"Error, height can't be negative"
                 )
-            print("Height update rejected")
             return False
         self._height = height
-        print(f"Height updated: {self.get_height():.1f}cm")
         return True
 
     def set_age(self, age: int) -> bool:
@@ -75,10 +73,8 @@ class Plant:
         """
         if age < 0:
             print(f"{self._name.capitalize()}: Error, age can't be negative")
-            print("Age update rejected")
             return False
         self._age = age
-        print(f"Age updated: {self.get_age()} days")
         return True
 
     def get_height(self) -> float:
@@ -105,12 +101,20 @@ if __name__ == "__main__":
     rose.show()
     print()
 
-    rose.set_height(25.0)
-    rose.set_age(30)
-    print()
-    rose.set_height(-25.0)
-    rose.set_age(-2)
+    if rose.set_height(25.0):
+        print(f"Height updated: {round(rose.get_height())}cm")
+
+    if rose.set_age(30):
+        print(f"Age updated: {rose.get_age()} days")
+
     print()
 
+    if not rose.set_height(-25.0):
+        print("Height update rejected")
+
+    if not rose.set_age(-2):
+        print("Age update rejected")
+
+    print()
     print("Current state: ", end="")
     rose.show()
