@@ -95,3 +95,53 @@ Example:
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+Exercise 4 - Garden Security System
+-----------------------------------
+
+Introduces encapsulation by protecting plant data from invalid values.
+
+In this exercise, the ``Plant`` class uses protected attributes such as
+``_height`` and ``_age``. These values should not be modified directly
+from outside the class. Instead, the class provides setter methods to
+validate new values before updating the object.
+
+Concepts practiced:
+
+- Encapsulation
+- Protected attributes
+- Getter methods
+- Setter methods
+- Data validation
+- Returning ``True`` or ``False`` to report update success
+- Keeping object state valid
+
+Why use setters?
+~~~~~~~~~~~~~~~~
+
+Setters allow the class to control how important values are changed.
+For example, plant height and age should not become negative. By using
+``set_height()`` and ``set_age()``, invalid values can be rejected before
+they corrupt the object.
+
+Example:
+
+.. code-block:: python
+
+   rose = Plant("Rose", 15.0, 10)
+
+   rose.set_height(25.0)
+   rose.set_age(30)
+
+   rose.set_height(-5.0)  # rejected
+   rose.set_age(-10)      # rejected
+
+API Reference
+~~~~~~~~~~~~~
+
+.. automodule:: ex4.ft_garden_security
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
