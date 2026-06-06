@@ -65,6 +65,17 @@ On Linux:
 ```
 xdg-open build/html/index.html
 ```
+or if it didn't work, use a browser directly instead; try one of these on Linux:
+```
+google-chrome build/html/index.html
+or
+```
+firefox build/html/index.html
+```
+or:
+```
+chromium build/html/index.html
+```
 
 if the `open` command didn't work, you can also try the below commands - copy & paste all 3 lines together to your terminal in one go:
 ```
