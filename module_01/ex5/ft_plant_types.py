@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 
-"""Secure plant data using encapsulation, getters, and setters.
+"""Model different plant types using inheritance and method overriding.
 
-This exercise demonstrates how a class can protect its internal data by
-using protected attributes and controlled access methods. Plant height
-and age are validated before being stored or updated.
+This exercise extends the base Plant class with specialized plant types:
+Flower, Tree, and Vegetable. Each child class inherits common plant
+attributes and behavior, then adds its own specific data and methods.
 """
 
 
 class Plant:
-    """Represent a plant with protected height and age values.
+    """Represent a generic plant.
 
-    The class stores plant information using protected attributes. Height
-    and age should be changed through setter methods so invalid values,
-    such as negative numbers, can be rejected.
+    A Plant stores common information shared by all plant types:
+    name, height, and age. Height and age are stored as protected
+    attributes and updated through controlled methods.
 
     Attributes:
         _name: The plant name.
@@ -22,10 +22,6 @@ class Plant:
     """
     def __init__(self, name: str, height: float, age: int) -> None:
         """Initialize a plant with validated height and age.
-
-        The height starts at ``0.0`` and the age is initialized before
-        validation methods are called. The setter methods are then used
-        to apply the same validation rules used for later updates.
 
         Args:
             name: The plant name.
@@ -42,14 +38,11 @@ class Plant:
     def set_height(self, height: float) -> bool:
         """Update the plant height if the value is valid.
 
-        A negative height is rejected and the current height remains
-        unchanged.
-
         Args:
             height: The new height in centimeters.
 
         Returns:
-            ``True`` if the height was updated, ``False`` otherwise.
+            True if the height was updated, False otherwise.
         """
         if height < 0:
             print(
@@ -63,13 +56,11 @@ class Plant:
     def set_age(self, age: int) -> bool:
         """Update the plant age if the value is valid.
 
-        A negative age is rejected and the current age remains unchanged.
-
         Args:
             age: The new age in days.
 
         Returns:
-            ``True`` if the age was updated, ``False`` otherwise.
+            True if the age was updated, False otherwise.
         """
         if age < 0:
             print(f"{self._name.capitalize()}: Error, age can't be negative")
@@ -86,9 +77,19 @@ class Plant:
         return self._age
 
     def grow(self, amount: float = 0.8) -> None:
+        """Increase the plant height.
+
+        Args:
+            amount: The number of centimeters added to the plant height.
+        """
         self._height += amount
 
     def age(self, days: int = 1) -> None:
+        """Increase the plant age.
+
+        Args:
+            days: The number of days added to the plant age.
+        """
         self._age += days
 
     def show(self) -> None:
@@ -100,24 +101,52 @@ class Plant:
 
 
 class Flower(Plant):
+    """Represent a flower.
+
+    A Flower is a specialized Plant with a color and blooming state.
+
+    Attributes:
+        color: The flower color.
+        has_bloomed: Whether the flower has bloomed.
+    """
+
     def __init__(self, name: str, height: float, age: int, color: str) -> None:
+        """Initialize a flower.
+
+        Args:
+            name: The flower name.
+            height: The initial flower height in centimeters.
+            age: The initial flower age in days.
+            color: The flower color.
+        """
         super().__init__(name, height, age)
         self.color = color
         self.has_bloomed: bool = False
 
     def bloom(self) -> None:
+        """Mark the flower as bloomed."""
         self.has_bloomed = True
 
     def show(self) -> None:
+        """Print flower information, including color and bloom state."""
         super().show()
         print(f" Color: {self.color}")
         if self.has_bloomed:
             print(f" {self._name.capitalize()} is blooming beautifully")
         else:
-            print(f" {self._name.capitalize()} has ot bloomed yet")
+            print(f" {self._name.capitalize()} has not bloomed yet")
 
 
 class Tree(Plant):
+    """Represent a tree.
+
+    A Tree is a specialized Plant with a trunk diameter and the ability
+    to produce shade.
+
+    Attributes:
+        trunk_diameter: The tree trunk diameter in centimeters.
+    """
+
     def __init__(
             self,
             name: str,
@@ -125,10 +154,19 @@ class Tree(Plant):
             age: int,
             trunk_diameter: float
     ) -> None:
+        """Initialize a tree.
+
+        Args:
+            name: The tree name.
+            height: The initial tree height in centimeters.
+            age: The initial tree age in days.
+            trunk_diameter: The trunk diameter in centimeters.
+        """
         super().__init__(name, height, age)
         self.trunk_diameter: float = trunk_diameter
 
     def produce_shade(self) -> None:
+        """Print the shade produced by the tree."""
         shadow_height: float = round(self.get_height(), 1)
         shadow_width: float = round(self.trunk_diameter, 1)
         print(
@@ -137,11 +175,22 @@ class Tree(Plant):
         )
 
     def show(self) -> None:
+        """Print tree information, including trunk diameter."""
         super().show()
         print(f" Trunk diameter: {round(self.trunk_diameter, 1)}cm")
 
 
 class Vegetable(Plant):
+    """Represent a vegetable plant.
+
+    A Vegetable is a specialized Plant with a harvest season and a
+    nutritional value. Its nutritional value increases when the
+    vegetable ages.
+
+    Attributes:
+        harvest_season: The season when the vegetable can be harvested.
+        nutritional_value: The vegetable nutritional value.
+    """
 
     def __init__(
             self,
@@ -151,18 +200,39 @@ class Vegetable(Plant):
             harvest_season: str,
             nutritional_value: int
     ) -> None:
+        """Initialize a vegetable.
+
+        Args:
+            name: The vegetable name.
+            height: The initial vegetable height in centimeters.
+            age: The initial vegetable age in days.
+            harvest_season: The harvest season.
+            nutritional_value: The starting nutritional value.
+        """
         super().__init__(name, height, age)
         self.harvest_season: str = harvest_season
         self.nutritional_value: int = nutritional_value
 
     def grow(self, amount: float = 1.9) -> None:
+        """Increase the vegetable height.
+
+        Args:
+            amount: The number of centimeters added to the height.
+        """
         super().grow(amount)
 
     def age(self, days: int = 1) -> None:
+        """Increase the vegetable age and nutritional value.
+
+        Args:
+            days: The number of days added to the vegetable age and
+                nutritional value.
+        """
         super().age(days)
         self.nutritional_value += days
 
     def show(self) -> None:
+        """Print vegetable information, including harvest and nutrition."""
         super().show()
         print(f" Harvest season: {self.harvest_season}")
         print(f" Nutritional value: {self.nutritional_value}")

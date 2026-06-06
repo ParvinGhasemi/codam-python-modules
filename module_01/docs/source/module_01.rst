@@ -145,3 +145,111 @@ API Reference
    :undoc-members:
    :show-inheritance:
 
+
+Exercise 5 - Specialized Plant Types
+------------------------------------
+
+Introduces inheritance by creating specialized plant classes from the
+base ``Plant`` class.
+
+The ``Flower``, ``Tree``, and ``Vegetable`` classes inherit the common
+plant attributes and methods from ``Plant``. Each child class then adds
+its own specific attributes and behavior.
+
+Concepts practiced:
+
+- Inheritance
+- Parent class and child class
+- ``super()``
+- Method overriding
+- Reusing common code
+- Specialized attributes
+- Specialized behavior
+- Polymorphism through shared methods such as ``show()``
+
+Inheritance structure
+~~~~~~~~~~~~~~~~~~~~~
+
+The base class is ``Plant``. It contains the common data and behavior:
+
+- name
+- height
+- age
+- ``grow()``
+- ``age()``
+- ``show()``
+
+The child classes extend this behavior:
+
+``Flower``
+    Adds a color and bloom state. It can bloom using ``bloom()``.
+
+``Tree``
+    Adds trunk diameter. It can produce shade using ``produce_shade()``.
+
+``Vegetable``
+    Adds harvest season and nutritional value. Its nutritional value
+    increases when the vegetable ages.
+
+Why use ``super()``?
+~~~~~~~~~~~~~~~~~~~~
+
+The child classes use ``super()`` to call methods from the parent
+``Plant`` class. This avoids copying the same setup and display logic
+into every child class.
+
+Example:
+
+.. code-block:: python
+
+   class Flower(Plant):
+       def __init__(
+           self,
+           name: str,
+           height: float,
+           age: int,
+           color: str,
+       ) -> None:
+           super().__init__(name, height, age)
+           self.color = color
+
+Method overriding
+~~~~~~~~~~~~~~~~~
+
+Each specialized class redefines ``show()``. This is called method
+overriding.
+
+The child class first calls the parent version using ``super().show()``,
+then prints its own extra information.
+
+Example:
+
+.. code-block:: python
+
+   def show(self) -> None:
+       super().show()
+       print(f"Color: {self.color}")
+
+Example usage
+~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   rose = Flower("rose", 15.0, 10, "red")
+   oak = Tree("oak", 200.0, 365, 5.0)
+   tomato = Vegetable("tomato", 5.0, 10, "April", 0)
+
+   rose.bloom()
+   oak.produce_shade()
+
+   for _ in range(20):
+       tomato.grow()
+       tomato.age()
+
+API Reference
+~~~~~~~~~~~~~
+
+.. automodule:: ex5.ft_plant_types
+   :members:
+   :undoc-members:
+   :show-inheritance:
