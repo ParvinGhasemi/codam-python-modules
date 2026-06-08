@@ -253,3 +253,99 @@ API Reference
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+Exercise 6 - Garden Analytics
+-----------------------------
+
+Combines the object-oriented concepts from the previous exercises and adds
+statistics tracking, static methods, class methods, nested classes, and a
+new ``Seed`` class.
+
+This exercise reuses the existing plant hierarchy and extends it with
+analytics behavior.
+
+Concepts practiced:
+
+- Nested classes
+- Static methods
+- Class methods
+- Method overriding
+- Inheritance chains
+- Statistics tracking
+- Reusing existing classes
+- Polymorphism
+- Shared functions that work with different plant types
+
+Nested ``Stats`` class
+~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Plant`` class contains a nested ``Stats`` class. This internal class
+tracks how many times selected methods are called:
+
+- ``grow()``
+- ``age()``
+- ``show()``
+
+Each plant owns its own ``Stats`` object, so every plant tracks its own
+method calls separately.
+
+Static method
+~~~~~~~~~~~~~
+
+The static method checks whether a given age is older than one year.
+
+It does not use ``self`` because it does not need a specific plant object.
+It also does not use ``cls`` because it does not need the class itself.
+
+Example:
+
+.. code-block:: python
+
+   Plant.is_older_than_year(400)
+
+Class method
+~~~~~~~~~~~~
+
+The class method creates an anonymous plant with default values.
+
+It uses ``cls`` so the class can create a new object of itself.
+
+Example:
+
+.. code-block:: python
+
+   anonymous = Plant.create_anonymous_plant()
+
+Seed class
+~~~~~~~~~~
+
+The ``Seed`` class inherits from ``Flower``. It reuses the flower behavior
+and adds seed-specific data.
+
+When the seed blooms, it also updates the number of seeds.
+
+Example:
+
+.. code-block:: python
+
+   sunflower = Seed("Sunflower", 80.0, 45, "yellow", 0)
+   sunflower.bloom()
+   sunflower.show()
+
+Statistics function
+~~~~~~~~~~~~~~~~~~~
+
+The ``display_statistics()`` function is not part of any class. It accepts
+any ``Plant`` object or child object and displays its statistics.
+
+This works because ``Flower``, ``Tree``, ``Vegetable``, and ``Seed`` all
+inherit from ``Plant``.
+
+API Reference
+~~~~~~~~~~~~~
+
+.. automodule:: ex6.ft_garden_analytics
+   :members:
+   :undoc-members:
+   :show-inheritance:
