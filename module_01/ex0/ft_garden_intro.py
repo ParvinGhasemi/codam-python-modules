@@ -14,7 +14,7 @@ if __name__ == "__main__":
     rose = Plant("rose", 25, 30)
 
     print("=== Welcome to My Garden ===")
-    print(f"Plant: {"rose".capitalize()}")
+    print(f"Plant: {rose.name.capitalize()}")
     print(f"Height: {rose.height}cm")
     print(f"Age: {rose.age} days\n")
     print("=== End of Program ===")
