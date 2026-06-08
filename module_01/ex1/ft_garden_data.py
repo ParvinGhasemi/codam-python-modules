@@ -2,6 +2,7 @@
 
 """Organize and display data for multiple garden plants."""
 
+
 class Plant:
     """Represent a plant with a name, height, and age."""
 
