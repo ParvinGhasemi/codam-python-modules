@@ -1,6 +1,4 @@
 import importlib
-import numpy as np
-import pandas as pd
 
 
 """
@@ -34,6 +32,30 @@ def check_dependencies() -> bool:
     return all_deps_available
 
 
+def compare_package_managers() -> None:
+    """Explain the two supported dependency management approaches."""
+
+    print()
+    print()
+    print("=================================================================")
+    print("Dependency management:")
+    print("** pip ** installs packages into your selected Python environment.")
+    print("This project lists its pip dependencies in requirements.txt.")
+    print("     python3 -m pip install -r requirements.txt")
+
+    print()
+    print("** Poetry ** manages project dependencies & virtual environments.")
+    print(
+        "It reads pyproject.toml and records resolved versions "
+        "in poetry.lock."
+    )
+    print("     poetry install")
+    print("     poetry run python loading.py")
+    print("=================================================================")
+    print()
+    print()
+
+
 def analyze_data() -> None:
     """Generate simulated Matrix data and save a visualization."""
     import numpy as np
@@ -57,7 +79,9 @@ def analyze_data() -> None:
     print()
     print()
 
-    data["rolling_avg"] = data["signal"].rolling(window=50, min_periods=1).mean()
+    data["rolling_avg"] = (
+        data["signal"].rolling(window=50, min_periods=1).mean()
+    )
     print(data.head())
     print()
     print()
@@ -110,7 +134,10 @@ def main() -> None:
 
     print("LOADING STATUS: Loading programs...\n")
     dependencies_ready: bool = check_dependencies()
+    compare_package_managers()
+
     if not dependencies_ready:
+        print("*****      What to do?    *****")
         print("From the ex1 directory, install the dependencies with:")
         print("python3 -m pip install -r requirements.txt")
         # print("Install the dependencies in your virtual environment with:")
@@ -123,13 +150,27 @@ def main() -> None:
     analyze_data()
 
 
-# instead of normal, what other are available?
-# rng.normal(50, 10, size=1000)	# Bell-shaped data centered around 50	Noisy signal measurements
-# rng.uniform(0, 100, size=1000)	# Values from 0 up to 100, with equal likelihood across equal-sized intervals	Random signal levels without a preferred center
-# rng.integers(0, 101, size=1000)	# Whole numbers from 0 through 100	Random scores
-# rng.binomial(1, 0.8, size=1000)	# Either 0 or 1, with an 80% chance of 1	Connection success or failure
-# rng.poisson(5, size=1000)	# Event counts averaging 5 per interval	Requests received each second
-# rng.exponential(2, size=1000)   # Nonnegative waiting times averaging 2Time between events
+# instead of normaldistribution we can:
+# rng.normal(50, 10, size=1000)
+# Bell-shaped data centered around 50	Noisy signal measurements
+# -----------------
+# rng.uniform(0, 100, size=1000)	# Values from 0 up to 100, with equal
+# likelihood across equal-sized intervals
+# Random signal levels without a preferred center
+# -----------------
+# rng.integers(0, 101, size=1000)
+# Whole numbers from 0 through 100	Random scores
+# -----------------
+# rng.binomial(1, 0.8, size=1000)
+# Either 0 or 1, with an 80% chance of 1
+# Connection success or failure
+# -----------------
+# rng.poisson(5, size=1000)
+# Event counts averaging 5 per interval
+# Requests received each second
+# -----------------
+# rng.exponential(2, size=1000)
+# Nonnegative waiting times averaging 2Time between events
 
 if __name__ == "__main__":
     main()

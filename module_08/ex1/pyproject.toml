@@ -1,0 +1,22 @@
+[project]
+name = "matrix-loading"
+version = "0.1.0"
+description = "Simulate & visualize matrix signal data"
+authors = [
+    {name = "parvinghasemi",email = "mghasemi.parvin@gmail.com"}
+]
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "numpy (>=2.5.3,<3.0.0)",
+    "pandas (>=3.0.6,<4.0.0)",
+    "matplotlib (>=3.11.2,<4.0.0)"
+]
+
+
+[tool.poetry]
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
