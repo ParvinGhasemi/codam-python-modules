@@ -60,14 +60,14 @@ def analyze_data() -> None:
     """Generate simulated Matrix data and save a visualization."""
     import numpy as np
     import pandas as pd
-    import matplotlib
-    matplotlib.use("Agg")
+    # import matplotlib
+    # matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
     count: int = 88
     output_file: str = "matrix_analysis.png"
     rng = np.random.default_rng(seed=12)
-    signal: list[float] = rng.normal(loc=50, scale=10, size=count)
+    signal = rng.normal(loc=50, scale=10, size=count)
     print(signal[:10])
     print()
 
@@ -103,27 +103,31 @@ def analyze_data() -> None:
 
     print("\nSignal summary:")
     print(data["signal"].describe())
+    print()
 
-    print("\nGenerating visualization...")
+    print("Generating visualization...")
 
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(
-        data["sample"],
-        data["signal"],
-        color="seagreen",
-        linewidth=2.1,
-        label="Simulated signal",
-    )
+    try:
+        ax.plot(
+            data["sample"],
+            data["signal"],
+            color="seagreen",
+            linewidth=2.1,
+            label="Simulated signal",
+        )
 
-    ax.set_title("Matrix Signal Analysis")
-    ax.set_xlabel("Sample")
-    ax.set_ylabel("Signal strength")
-    ax.legend()
-    ax.grid(alpha=0.3)
+        ax.set_title("Matrix Signal Analysis")
+        ax.set_xlabel("Sample")
+        ax.set_ylabel("Signal strength")
+        ax.legend()
+        ax.grid(alpha=0.3)
 
-    fig.tight_layout()
-    fig.savefig(output_file, dpi=150)
-    plt.close(fig)
+        fig.tight_layout()
+        fig.savefig(output_file, dpi=150)
+        plt.show()
+    finally:
+        plt.close(fig)
 
     print("Analysis complete!")
     print(f"Results saved to: {output_file}")
@@ -138,8 +142,8 @@ def main() -> None:
 
     if not dependencies_ready:
         print("*****      What to do?    *****")
-        print("From the ex1 directory, install the dependencies with:")
-        print("python3 -m pip install -r requirements.txt")
+        print("Dependencies are unavailable in the current environment.")
+        print("From the ex1 directory, use either installation method above.")
         # print("Install the dependencies in your virtual environment with:")
         # print("python3 -m pip install numpy pandas matplotlib")
         return
