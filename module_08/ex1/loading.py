@@ -11,29 +11,34 @@ poetry run python loading.py
 
 
 def check_dependencies() -> bool:
+    dependencies: dict[str, str] = {
+        "numpy": "Numerical computation ready",
+        "pandas": "Data manipulation ready",
+        "matplotlib": "Visualization ready",
+    }
+    all_deps_available: bool = True
+
     print("Checking dependencies:")
 
-    try:
-        package = importlib.import_module("numpy")
-        version: str = str(package.__version__)
-        print(f"[OK] numpy ({version})")
-        return True
+    for name, description in dependencies.items():
+        try:
+            package = importlib.import_module(name)
+            version: str = str(package.__version__)
+            print(f"[OK] {name} ({version}) - {description}")
 
-    except ImportError:
-        print("[ERROR]: MISSING OR UNAVAILABLE numpy")
-        return False
-
-
+        except ImportError:
+            print(f"[ERROR]: MISSING OR UNAVAILABLE {name}")
+            all_deps_available = False
+    return all_deps_available
 
 
 def main() -> None:
     print("LOADING STATUS: Loading programs...\n")
     dependencies_ready: bool = check_dependencies()
     if not dependencies_ready:
-        if not dependencies_ready:
-            print("Install NumPy in your virtual environment with:")
-            print("python3 -m pip install numpy")
-            return
+        print("Install the dependencies in your virtual environment with:")
+        print("python3 -m pip install numpy pandas matplotlib")
+        return
 
     print()
     print("Ready to analyze Matrix data!")
