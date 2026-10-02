@@ -36,8 +36,10 @@ def main() -> None:
     print("LOADING STATUS: Loading programs...\n")
     dependencies_ready: bool = check_dependencies()
     if not dependencies_ready:
-        print("Install the dependencies in your virtual environment with:")
-        print("python3 -m pip install numpy pandas matplotlib")
+        print("From the ex1 directory, install the dependencies with:")
+        print("python3 -m pip install -r requirements.txt")
+        # print("Install the dependencies in your virtual environment with:")
+        # print("python3 -m pip install numpy pandas matplotlib")
         return
 
     print()
