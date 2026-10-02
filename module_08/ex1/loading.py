@@ -1,4 +1,6 @@
 import importlib
+import numpy as np
+import pandas as pd
 
 
 """
@@ -32,6 +34,39 @@ def check_dependencies() -> bool:
     return all_deps_available
 
 
+def analyze_data() -> None:
+    count: int = 88
+    rng = np.random.default_rng(seed=12)
+    signal: list[float] = rng.normal(loc=50, scale=10, size=count)
+    print(signal[:10])
+    print()
+
+    data = pd.DataFrame({
+        "sample": np.arange(count),
+        "signal": signal,
+    })
+    print(data.head())
+    print()
+
+    average: float = float(data["signal"].mean())
+    minimum: float = float(data["signal"].min())
+    maximum: float = float(data["signal"].max())
+    total: int = len(data)
+    median: float = float(data["signal"].median())
+    std_dev: float = float(data["signal"].std())
+
+    print(f"Average signal:     {average:.2f}")
+    print(f"Minimum signal:     {minimum:.2f}")
+    print(f"Maximum signal:     {maximum:.2f}")
+    print(f"Total measurements: {total}")
+    print(f"Median signal:      {median:.2f}")
+    print(f"Standard deviation: {std_dev:.2f}")
+    print()
+
+    print("\nSignal summary:")
+    print(data["signal"].describe())
+
+
 def main() -> None:
     print("LOADING STATUS: Loading programs...\n")
     dependencies_ready: bool = check_dependencies()
@@ -45,6 +80,10 @@ def main() -> None:
     print()
     print("Ready to analyze Matrix data!")
 
+    analyze_data()
+
+
+# instead of normal, what other are available?
 
 if __name__ == "__main__":
     main()
