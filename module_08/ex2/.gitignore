@@ -1,0 +1,55 @@
+# git rm --cached -- module_08/ex1/matrix_analysis.png
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+
+# Type-checking, linting, and test caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+
+# Coverage reports
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Virtual environments
+.venv/
+venv/
+env/
+matrix_env/
+testinggggg/
+
+# Local environment settings and secrets
+.env
+.env.*
+!.env.example
+
+# Python build and packaging output
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# macOS files
+.DS_Store
+._*
+
+# Editor temporary files
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Generated exercise chart
+matrix_analysis.png
