@@ -92,14 +92,13 @@ def main() -> None:
         print(" **********  End of Errors    ********** ")
         print()
     else:
-
-        print("Testing if crew and datetime are in correct format but as strings")
+        print("If crew and datetime are in correct format but as strings")
         print(f"    crew_size:      {converted_station.crew_size}")
         print(f"    crew_size type: {type(converted_station.crew_size)}")
 
         print()
         print(f"    date:   {converted_station.last_maintenance}")
-        print(f"    type of date:   {type(converted_station.last_maintenance)}")
+        print(f"    type of date:  {type(converted_station.last_maintenance)}")
 
 
 if __name__ == "__main__":
