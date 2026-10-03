@@ -1,22 +1,11 @@
-"""
-Create a Pydantic model with these validated fields:
-
-•station_id: String, 3-10 characters
-•name: String, 1-50 characters
-•crew_size: Integer, 1-20 people
-•power_level: Float, 0.0-100.0 percent
-•oxygen_level: Float, 0.0-100.0 percent
-•last_maintenance: DateTime field
-•is_operational: Boolean, defaults to True
-•notes: Optional string, max 200 characters
-"""
-
-# to check the version in commandline:
-# python -c "import pydantic; print(pydantic.__version__)"
-
-
 from pydantic import BaseModel, Field, ValidationError
 from datetime import datetime
+
+"""
+python -m pip install mypy "pydantic>=2,<3"
+python -m mypy --strict space_station.py
+"""
+
 
 class SpaceStation(BaseModel):
     station_id: str = Field(min_length=3, max_length=10)
@@ -55,29 +44,52 @@ def main() -> None:
     print(f"Status: {status}")
 
     print()
-    print("=" * 50)
+    print("=" * 60)
 
+    print()
     print("Attempting to create an invalid station:")
     try:
-        invalid_station = SpaceStation(
+        SpaceStation(
             station_id="ISS002",
-            # name="International Space Station",
+            name="International Space Station",
             crew_size=25,
             power_level=85.5,
             oxygen_level=92.3,
-            last_maintenance=datetime(2026, 10, 21)
+            last_maintenance=datetime(2026, 12, 21)
         )
     except ValidationError as error:
         print("Expected validation error:")
         print()
         for issue in error.errors():
-            field: str = issue["loc"][0]
+            field: str | int = issue["loc"][0]
             message: str = issue["msg"]
             if issue["type"] == "missing":
                 print(f" {field}: {message}")
             else:
                 print(f" {field}: {message} - (received: {issue["input"]!r})")
             print()
+
+    print("=" * 60)
+    print()
+
+    converted_station = SpaceStation.model_validate({
+        "station_id": "ISS003",
+        "name": "Conversion Test",
+        "crew_size": "6",
+        "power_level": 85.5,
+        "oxygen_level": 92.3,
+        "last_maintenance": "2026-12-21T14:30:00",
+    })
+
+    print("Testing what happens if we feed variables with string:")
+    print()
+    print("Testing if crew and datetime are in correct format but as strings")
+    print(f"    crew_size:      {converted_station.crew_size}")
+    print(f"    crew_size type: {type(converted_station.crew_size)}")
+
+    print()
+    print(f"    date:   {converted_station.last_maintenance}")
+    print(f"    type of date:   {type(converted_station.last_maintenance)}")
 
 
 if __name__ == "__main__":
