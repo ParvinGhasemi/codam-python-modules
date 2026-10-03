@@ -72,24 +72,34 @@ def main() -> None:
     print("=" * 60)
     print()
 
-    converted_station = SpaceStation.model_validate({
-        "station_id": "ISS003",
-        "name": "Conversion Test",
-        "crew_size": "6",
-        "power_level": 85.5,
-        "oxygen_level": 92.3,
-        "last_maintenance": "2026-12-21T14:30:00",
-    })
+    try:
+        print("Testing what happens if we feed variables with string:")
+        print()
+        converted_station = SpaceStation.model_validate({
+            "station_id": "ISS003",
+            "name": "Conversion Test",
+            "crew_size": "six",
+            "power_level": 85.5,
+            "oxygen_level": 92.3,
+            "last_maintenance": "2026-12-21T14:30:00",
+        })
+    except ValidationError as error:
+        print("<<< !!!!! Something went wrong - Conversion Failed !!!!! >>>")
+        print()
+        for issue in error.errors():
+            print(f"{issue['loc'][0]}: {issue['msg']}")
+        print()
+        print(" **********  End of Errors    ********** ")
+        print()
+    else:
 
-    print("Testing what happens if we feed variables with string:")
-    print()
-    print("Testing if crew and datetime are in correct format but as strings")
-    print(f"    crew_size:      {converted_station.crew_size}")
-    print(f"    crew_size type: {type(converted_station.crew_size)}")
+        print("Testing if crew and datetime are in correct format but as strings")
+        print(f"    crew_size:      {converted_station.crew_size}")
+        print(f"    crew_size type: {type(converted_station.crew_size)}")
 
-    print()
-    print(f"    date:   {converted_station.last_maintenance}")
-    print(f"    type of date:   {type(converted_station.last_maintenance)}")
+        print()
+        print(f"    date:   {converted_station.last_maintenance}")
+        print(f"    type of date:   {type(converted_station.last_maintenance)}")
 
 
 if __name__ == "__main__":
