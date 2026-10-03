@@ -15,7 +15,7 @@ Create a Pydantic model with these validated fields:
 # python -c "import pydantic; print(pydantic.__version__)"
 
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 from datetime import datetime
 
 class SpaceStation(BaseModel):
@@ -39,15 +39,6 @@ def main() -> None:
         last_maintenance=datetime(2026, 9, 21)
     )
 
-    # invalid_station = SpaceStation(
-    #     station_id="ISS001",
-    #     name="International Space Station",
-    #     crew_size=25,
-    #     power_level=85.5,
-    #     oxygen_level=92.3,
-    #     last_maintenance=datetime(2026, 19, 21)
-    # )
-
     print()
     print("Space Station Data Validation")
     print("=" * 50)
@@ -66,7 +57,23 @@ def main() -> None:
     #     "Status: "
     #     f"{'Operational' if valid_station.is_operational else 'Broken'}"
     # )
+    print()
     print("=" * 50)
+
+    print("Attempting to create an invalid station:")
+    try:
+        invalid_station = SpaceStation(
+            station_id="ISS002",
+            name="International Space Station",
+            crew_size=25,
+            power_level=85.5,
+            oxygen_level=92.3,
+            last_maintenance=datetime(2026, 10, 21)
+        )
+    except ValidationError as error:
+        print("Expected validation error:")
+        for issue in error.errors():
+            print(issue["msg"])
     # print("========================================")
 
 
