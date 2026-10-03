@@ -53,10 +53,7 @@ def main() -> None:
         "Operational" if valid_station.is_operational else "Not Operational"
     )
     print(f"Status: {status}")
-    # print(
-    #     "Status: "
-    #     f"{'Operational' if valid_station.is_operational else 'Broken'}"
-    # )
+
     print()
     print("=" * 50)
 
@@ -64,7 +61,7 @@ def main() -> None:
     try:
         invalid_station = SpaceStation(
             station_id="ISS002",
-            name="International Space Station",
+            # name="International Space Station",
             crew_size=25,
             power_level=85.5,
             oxygen_level=92.3,
@@ -72,10 +69,15 @@ def main() -> None:
         )
     except ValidationError as error:
         print("Expected validation error:")
+        print()
         for issue in error.errors():
-            print(issue["msg"])
-    # print("========================================")
-
+            field: str = issue["loc"][0]
+            message: str = issue["msg"]
+            if issue["type"] == "missing":
+                print(f" {field}: {message}")
+            else:
+                print(f" {field}: {message} - (received: {issue["input"]!r})")
+            print()
 
 
 if __name__ == "__main__":
