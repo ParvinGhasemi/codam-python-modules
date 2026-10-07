@@ -1,20 +1,3 @@
-"""
-ContactType Enum
-Define contact types: radio, visual, physical, telepathic
-"""
-
-"""
-contact_id: String, 5-15 characters
-•timestamp: DateTime of contact
-•location: String, 3-100 characters
-•contact_type: ContactType enum
-•signal_strength: Float, 0.0-10.0 scale
-•duration_minutes: Integer, 1-1440 (max 24 hours)
-•witness_count: Integer, 1-100 people
-•message_received: Optional string, max 500 characters
-•is_verified: Boolean, defaults to False
-"""
-
 from pydantic import BaseModel, Field, model_validator, ValidationError
 from enum import Enum
 from datetime import datetime
@@ -57,6 +40,11 @@ class AlienContact(BaseModel):
                 "Telepathic contact requires at least 3 witnesses."
             )
 
+        if self.signal_strength > 7.0 and not self.message_received:
+            raise ValueError(
+                "Strong signals (> 7.0) must include a received message"
+            )
+
         return self
 
 
@@ -74,8 +62,9 @@ def main() -> None:
                 contact_type=ContactType.TELEPATHIC,
                 is_verified=True,
                 signal_strength=8.5,
+                message_received="Greetings from Zeta Reticuli",
                 duration_minutes=450,
-                witness_count=2,
+                witness_count=3,
             )
             hours, minutes = divmod(contact.duration_minutes, 60)
 
@@ -93,9 +82,11 @@ def main() -> None:
             print(f"Signal: {contact.signal_strength}/10")
             print(f"Duration: {hours} hours and {minutes} minutes")
             print(f"Witnesses: {contact.witness_count}")
+            print(f"Message: {contact.message_received}")
 
         print()
         print("=" * 60)
+
 
 if __name__ == "__main__":
     main()
