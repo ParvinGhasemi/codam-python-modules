@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator, ValidationError
 from enum import Enum
 
 
@@ -31,6 +31,13 @@ class SpaceMission(BaseModel):
     mission_status: str = "planned"
     budget_millions: float = Field(ge=1.0, le=10000.0)
 
+    @model_validator(mode="after")
+    def validate_mission(self) -> "SpaceMission":
+        if not self.mission_id.startswith("M"):
+            raise ValueError("Mission ID must start with 'M'")
+
+        return self
+
 
 def main() -> None:
     captain = CrewMember(
@@ -41,7 +48,35 @@ def main() -> None:
         specialization="Mission Command",
         years_experience=15,
     )
-    print(captain)
+
+    print("Space Mission Validation")
+    print("=" * 60)
+
+    for mission_id in ("M2026_MARS", "X2026_MARS"):
+        print(f"Testing mission ID: {mission_id}")
+        print("-" * 30)
+
+        try:
+            mission = SpaceMission(
+                mission_id=mission_id,
+                mission_name="Mars Exploration",
+                destination="Mars",
+                launch_date=datetime(2026, 12, 1),
+                duration_days=180,
+                crew=[captain],
+                budget_millions=2500.0,
+            )
+        except ValidationError as error:
+            print("Validation failed:")
+            for issue in error.errors():
+                print(issue["msg"])
+        else:
+            print(f"Valid mission: {mission.mission_name}")
+            print(f"ID: {mission.mission_id}")
+            print(f"Crew size: {len(mission.crew)}")
+
+        print()
+        print("=" * 60)
 
 
 if __name__ == "__main__":
