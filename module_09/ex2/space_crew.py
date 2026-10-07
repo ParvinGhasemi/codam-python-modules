@@ -45,6 +45,21 @@ class SpaceMission(BaseModel):
                 "Mission must have at least one Commander or Captain"
             )
 
+        if self.duration_days > 365:
+            experienced_count = 0
+            for member in self.crew:
+                if member.years_experience >= 5:
+                    experienced_count += 1
+            if experienced_count * 2 < len(self.crew):
+                raise ValueError(
+                    "Long missions require at least 50% experienced crew"
+                )
+
+        for member in self.crew:
+            if not member.is_active:
+                raise ValueError(
+                    f"Crew member {member.name} must be active"
+                )
         return self
 
 
@@ -55,7 +70,7 @@ def main() -> None:
         rank=Rank.OFFICER,
         age=30,
         specialization="Navigation",
-        years_experience=6,
+        years_experience=2,
     )
 
     captain = CrewMember(
@@ -64,7 +79,16 @@ def main() -> None:
         rank=Rank.CAPTAIN,
         age=42,
         specialization="Mission Command",
-        years_experience=15,
+        years_experience=3,
+    )
+
+    captain = CrewMember(
+        member_id="CM002",
+        name="Sarah Connor",
+        rank=Rank.CAPTAIN,
+        age=42,
+        specialization="Mission Command",
+        years_experience=3,
     )
 
     test_cases = [
@@ -82,7 +106,7 @@ def main() -> None:
                 mission_name="Mars Exploration",
                 destination="Mars",
                 launch_date=datetime(2026, 12, 1),
-                duration_days=180,
+                duration_days=400,
                 crew=crew,
                 budget_millions=2500.0,
             )
