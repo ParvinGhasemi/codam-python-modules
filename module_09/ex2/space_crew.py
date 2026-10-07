@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
 from enum import Enum
 
@@ -20,6 +21,17 @@ class CrewMember(BaseModel):
     is_active: bool = True
 
 
+class SpaceMission(BaseModel):
+    mission_id: str = Field(min_length=5, max_length=15)
+    mission_name: str = Field(min_length=3, max_length=100)
+    destination: str = Field(min_length=3, max_length=50)
+    launch_date: datetime
+    duration_days: int = Field(ge=1, le=3650)
+    crew: list[CrewMember] = Field(min_length=1, max_length=12)  # 1&12: membr
+    mission_status: str = "planned"
+    budget_millions: float = Field(ge=1.0, le=10000.0)
+
+
 def main() -> None:
     captain = CrewMember(
         member_id="CM001",
@@ -30,6 +42,7 @@ def main() -> None:
         years_experience=15,
     )
     print(captain)
+
 
 if __name__ == "__main__":
     main()
