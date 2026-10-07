@@ -15,16 +15,16 @@ contact_id: String, 5-15 characters
 •is_verified: Boolean, defaults to False
 """
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, ValidationError
 from enum import Enum
 from datetime import datetime
 
 
-class ContactType(Enum):
+class ContactType(str, Enum):
     RADIO = "radio"
     VISUAL = "visual"
-    PHYSICAL: str = "physical"
-    TELEPATHIC: str = "telepathic"
+    PHYSICAL = "physical"
+    TELEPATHIC = "telepathic"
 
 
 class AlienContact(BaseModel):
@@ -38,12 +38,47 @@ class AlienContact(BaseModel):
     message_received: str | None = Field(default=None, max_length=500)
     is_verified: bool = False
 
-
-
+    @model_validator(mode="after")
+    def validate_contact(self) -> "AlienContact":
+        if not self.contact_id.startswith("AC"):
+            raise ValueError("Contact ID must start with 'AC'")
+        return self
 
 
 def main() -> None:
-    print("hi")
+    print("Alien Contact Log Validation")
+    print("=" * 60)
+    for contact_id in ("AC1234567890Z", "BAC9876Z"):
+        print(f"Testing contact_id = {contact_id}")
+
+        try:
+            contact = AlienContact(
+                contact_id=contact_id,
+                timestamp=datetime(2027, 10, 10, 14, 30),
+                location="Area 52, Nevada",
+                contact_type=ContactType.RADIO,
+                signal_strength=8.5,
+                duration_minutes=450,
+                witness_count=5,
+            )
+            hours, minutes = divmod(contact.duration_minutes, 60)
+
+        except ValidationError as error:
+            print("Validation failed:")
+            for issue in error.errors():
+                print(issue["msg"])
+
+        else:
+            print("Valid contact report:")
+            print(f"ID: {contact.contact_id}")
+            print(f"Type: {contact.contact_type.value}")
+            print(f"Location: {contact.location}")
+            print(f"Signal: {contact.signal_strength}/10")
+            print(f"Duration: {hours} hours and {minutes} minutes")
+            print(f"Witnesses: {contact.witness_count}")
+
+        print()
+        print("=" * 60)
 
 if __name__ == "__main__":
     main()
