@@ -36,12 +36,30 @@ class SpaceMission(BaseModel):
         if not self.mission_id.startswith("M"):
             raise ValueError("Mission ID must start with 'M'")
 
+        has_leader = any(
+            member.rank in (Rank.CAPTAIN, Rank.COMMANDER)
+            for member in self.crew
+        )
+        if not has_leader:
+            raise ValueError(
+                "Mission must have at least one Commander or Captain"
+            )
+
         return self
 
 
 def main() -> None:
-    captain = CrewMember(
+    officer = CrewMember(
         member_id="CM001",
+        name="Alex Morgan",
+        rank=Rank.OFFICER,
+        age=30,
+        specialization="Navigation",
+        years_experience=6,
+    )
+
+    captain = CrewMember(
+        member_id="CM002",
         name="Sarah Connor",
         rank=Rank.CAPTAIN,
         age=42,
@@ -49,21 +67,23 @@ def main() -> None:
         years_experience=15,
     )
 
-    print("Space Mission Validation")
-    print("=" * 60)
+    test_cases = [
+        ("Crew without a leader", [officer]),
+        ("Crew with a leader", [officer, captain]),
+    ]
 
-    for mission_id in ("M2026_MARS", "X2026_MARS"):
-        print(f"Testing mission ID: {mission_id}")
-        print("-" * 30)
+    for description, crew in test_cases:
+        print(description)
+        print("=" * 40)
 
         try:
             mission = SpaceMission(
-                mission_id=mission_id,
+                mission_id="M2026_MARS",
                 mission_name="Mars Exploration",
                 destination="Mars",
                 launch_date=datetime(2026, 12, 1),
                 duration_days=180,
-                crew=[captain],
+                crew=crew,
                 budget_millions=2500.0,
             )
         except ValidationError as error:
@@ -72,11 +92,10 @@ def main() -> None:
                 print(issue["msg"])
         else:
             print(f"Valid mission: {mission.mission_name}")
-            print(f"ID: {mission.mission_id}")
-            print(f"Crew size: {len(mission.crew)}")
+            for member in mission.crew:
+                print(f"- {member.name}: {member.rank.value}")
 
         print()
-        print("=" * 60)
 
 
 if __name__ == "__main__":
